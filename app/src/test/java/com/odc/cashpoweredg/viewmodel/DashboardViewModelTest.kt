@@ -7,6 +7,7 @@ import com.odc.cashpoweredg.data.repository.CashPowerRepository
 import com.odc.cashpoweredg.model.CreditState
 import com.odc.cashpoweredg.model.MILLIS_PAR_JOUR
 import com.odc.cashpoweredg.model.MessagesErreur
+import com.odc.cashpoweredg.model.UiStatus
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
@@ -30,7 +31,11 @@ class DashboardViewModelTest {
 
     private val maintenant = jour(4)
 
-    private val parametres = Parametres(tarifKwhGnf = 2_000.0, seuilAlerteJours = 2.0, nomCompteur = "Compteur Maison")
+    private val parametres = Parametres(
+        tarifKwhGnf = 2_000.0,
+        seuilAlerteJours = 2.0,
+        nomCompteur = "Compteur Maison"
+    )
 
     // Jour 1 : 50 kWh, jour 3 : 24 kWh → 13 kWh/jour
     private val releves = listOf(
@@ -64,7 +69,9 @@ class DashboardViewModelTest {
     @Test
     fun `42 kWh a 13 kWh par jour donnent un credit suffisant`() {
         // 24 kWh au dernier relevé + achat de 36 000 GNF (18 kWh) le jour 4 = 42 kWh
-        val achats = listOf(AchatCredit(compteurId = 1, montantGnf = 36_000, kwh = 18.0, date = jour(4)))
+        val achats = listOf(
+            AchatCredit(compteurId = 1, montantGnf = 36_000, kwh = 18.0, date = jour(4))
+        )
 
         val etat = buildDashboardUiState(releves, achats, parametres, maintenant)
 
@@ -103,7 +110,9 @@ class DashboardViewModelTest {
     fun `le ViewModel suit les donnees du repository`() = runTest {
         val repository = FakeCashPowerRepository(parametres)
         val viewModel = DashboardViewModel(repository, horloge = { maintenant })
-        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { viewModel.uiState.collect {} }
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+            viewModel.uiState.collect {}
+        }
 
         assertEquals(UiStatus.EMPTY, viewModel.uiState.value.statut)
 
@@ -118,10 +127,13 @@ class DashboardViewModelTest {
     @Test
     fun `une erreur de chargement est exposee dans l etat`() = runTest {
         val repository = object : CashPowerRepository by FakeCashPowerRepository() {
-            override fun observeReleves() = flow<List<Releve>> { throw IOException("base indisponible") }
+            override fun observeReleves() =
+                flow<List<Releve>> { throw IOException("base indisponible") }
         }
         val viewModel = DashboardViewModel(repository, horloge = { maintenant })
-        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { viewModel.uiState.collect {} }
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+            viewModel.uiState.collect {}
+        }
 
         assertEquals(MessagesErreur.CHARGEMENT, viewModel.uiState.value.error)
         assertEquals(UiStatus.ERROR, viewModel.uiState.value.statut)
@@ -129,7 +141,10 @@ class DashboardViewModelTest {
 
     @Test
     fun `l etat initial est en chargement`() {
-        val viewModel = DashboardViewModel(FakeCashPowerRepository(parametres), horloge = { maintenant })
+        val viewModel = DashboardViewModel(
+            FakeCashPowerRepository(parametres),
+            horloge = { maintenant }
+        )
 
         assertEquals(UiStatus.LOADING, viewModel.uiState.value.statut)
     }
