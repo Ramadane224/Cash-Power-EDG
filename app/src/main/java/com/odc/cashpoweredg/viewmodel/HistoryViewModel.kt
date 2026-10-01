@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.odc.cashpoweredg.data.local.entity.AchatCredit
-import com.odc.cashpoweredg.data.local.entity.Releve
+import com.odc.cashpoweredg.data.entity.AchatCredit
+import com.odc.cashpoweredg.data.entity.Releve
 import com.odc.cashpoweredg.data.repository.CashPowerRepository
 import com.odc.cashpoweredg.model.CoutMensuel
 import com.odc.cashpoweredg.model.MessagesErreur
