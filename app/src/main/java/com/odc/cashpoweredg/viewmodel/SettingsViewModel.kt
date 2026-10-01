@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.odc.cashpoweredg.data.local.entity.Parametres
+import com.odc.cashpoweredg.data.entity.Parametres
 import com.odc.cashpoweredg.data.repository.CashPowerRepository
 import com.odc.cashpoweredg.model.MessagesErreur
 import com.odc.cashpoweredg.model.NOM_COMPTEUR_PAR_DEFAUT
