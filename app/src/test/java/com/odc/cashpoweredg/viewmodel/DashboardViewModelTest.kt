@@ -62,7 +62,7 @@ class DashboardViewModelTest {
     }
 
     @Test
-    fun `42 kWh a 13 kWh par jour donnent un credit suffisant`() {
+    fun  `42 kWh a 13 kWh par jour donnent un credit suffisant`() {
         // 24 kWh au dernier relevé + achat de 36 000 GNF (18 kWh) le jour 4 = 42 kWh
         val achats = listOf(AchatCredit(compteurId = 1, montantGnf = 36_000, kwh = 18.0, date = jour(4)))
 
