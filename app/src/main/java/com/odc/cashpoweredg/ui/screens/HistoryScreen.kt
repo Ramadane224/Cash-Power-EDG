@@ -40,8 +40,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.odc.cashpoweredg.data.local.entity.AchatCredit
-import com.odc.cashpoweredg.data.local.entity.Releve
+import com.odc.cashpoweredg.data.entity.AchatCredit
+import com.odc.cashpoweredg.data.entity.Releve
 import com.odc.cashpoweredg.model.CoutMensuel
 import com.odc.cashpoweredg.ui.utils.Formatters
 import com.odc.cashpoweredg.viewmodel.FiltreHistorique

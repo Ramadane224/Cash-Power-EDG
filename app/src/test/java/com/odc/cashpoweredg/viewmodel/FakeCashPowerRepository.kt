@@ -1,8 +1,8 @@
 package com.odc.cashpoweredg.viewmodel
 
-import com.odc.cashpoweredg.data.local.entity.AchatCredit
-import com.odc.cashpoweredg.data.local.entity.Parametres
-import com.odc.cashpoweredg.data.local.entity.Releve
+import com.odc.cashpoweredg.data.entity.AchatCredit
+import com.odc.cashpoweredg.data.entity.Parametres
+import com.odc.cashpoweredg.data.entity.Releve
 import com.odc.cashpoweredg.data.repository.CashPowerRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

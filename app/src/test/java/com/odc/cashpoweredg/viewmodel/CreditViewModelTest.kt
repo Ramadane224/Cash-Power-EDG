@@ -1,6 +1,6 @@
 package com.odc.cashpoweredg.viewmodel
 
-import com.odc.cashpoweredg.data.local.entity.Parametres
+import com.odc.cashpoweredg.data.entity.Parametres
 import com.odc.cashpoweredg.model.MessagesErreur
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse

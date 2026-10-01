@@ -1,7 +1,7 @@
 package com.odc.cashpoweredg.viewmodel
 
-import com.odc.cashpoweredg.data.local.entity.AchatCredit
-import com.odc.cashpoweredg.data.local.entity.Releve
+import com.odc.cashpoweredg.data.entity.AchatCredit
+import com.odc.cashpoweredg.data.entity.Releve
 import com.odc.cashpoweredg.data.repository.CashPowerRepository
 import com.odc.cashpoweredg.model.MessagesErreur
 import kotlinx.coroutines.ExperimentalCoroutinesApi

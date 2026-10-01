@@ -17,7 +17,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.odc.cashpoweredg.data.repository.CashPowerRepository
-import com.odc.cashpoweredg.data.repository.DefaultCashPowerRepository
 import com.odc.cashpoweredg.ui.screens.DashboardScreen
 import com.odc.cashpoweredg.ui.screens.FormScreen
 import com.odc.cashpoweredg.ui.screens.HistoryScreen
@@ -30,8 +29,8 @@ import com.odc.cashpoweredg.viewmodel.SettingsViewModel
 @Composable
 fun AppNavigation(
     modifier: Modifier = Modifier,
-    repository: CashPowerRepository = DefaultCashPowerRepository.instance
-) {
+    repository: CashPowerRepository
+){
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route

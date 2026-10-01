@@ -19,10 +19,12 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
 
-        setContent {
-            CashPowerEDGTheme {
-                AppNavigation()
-            }
-        }
+       setContent {
+    CashPowerEDGTheme {
+        AppNavigation(
+            repository = appContainer.repository
+        )
+    }
+}
     }
 }

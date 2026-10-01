@@ -1,7 +1,7 @@
 package com.odc.cashpoweredg.model
 
-import com.odc.cashpoweredg.data.local.entity.AchatCredit
-import com.odc.cashpoweredg.data.local.entity.Releve
+import com.odc.cashpoweredg.data.entity.AchatCredit
+import com.odc.cashpoweredg.data.entity.Releve
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertThrows
