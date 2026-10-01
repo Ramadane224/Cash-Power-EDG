@@ -36,11 +36,28 @@ fun AppNavigation(
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
 
-    // Instanciation des ViewModels avec la fabrique qui injecte le Repository
-    val dashboardViewModel: DashboardViewModel = viewModel(factory = DashboardViewModel.factory(repository))
-    val creditViewModel: CreditViewModel = viewModel(factory = CreditViewModel.factory(repository))
-    val historyViewModel: HistoryViewModel = viewModel(factory = HistoryViewModel.factory(repository))
-    val settingsViewModel: SettingsViewModel = viewModel(factory = SettingsViewModel.factory(repository))
+    // ViewModels créés avec la fabrique qui injecte le Repository
+    val dashboardViewModel: DashboardViewModel =
+        viewModel(factory = DashboardViewModel.factory(repository))
+    val creditViewModel: CreditViewModel =
+        viewModel(factory = CreditViewModel.factory(repository))
+    val historyViewModel: HistoryViewModel =
+        viewModel(factory = HistoryViewModel.factory(repository))
+    val settingsViewModel: SettingsViewModel =
+        viewModel(factory = SettingsViewModel.factory(repository))
+
+    // Navigation vers un onglet : une seule définition, réutilisée partout
+    val navigateTo: (String) -> Unit = { route ->
+        if (currentRoute != route) {
+            navController.navigate(route) {
+                popUpTo(navController.graph.findStartDestination().id) {
+                    saveState = true
+                }
+                launchSingleTop = true
+                restoreState = true
+            }
+        }
+    }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -49,17 +66,7 @@ fun AppNavigation(
                 Screen.destinations.forEach { screen ->
                     NavigationBarItem(
                         selected = currentRoute == screen.route,
-                        onClick = {
-                            if (currentRoute != screen.route) {
-                                navController.navigate(screen.route) {
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
-                            }
-                        },
+                        onClick = { navigateTo(screen.route) },
                         icon = {
                             Icon(
                                 imageVector = screen.icon,
@@ -78,42 +85,10 @@ fun AppNavigation(
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Dashboard.route) {
-                DashboardScreen(
-                    viewModel = dashboardViewModel,
-                    onNavigateToForm = {
-                        navController.navigate(Screen.Form.route) {
-                            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    },
-                    onNavigateToSettings = {
-                        navController.navigate(Screen.Settings.route) {
-                            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    }
-                )
+                DashboardScreen(viewModel = dashboardViewModel)
             }
             composable(Screen.Form.route) {
-                FormScreen(
-                    viewModel = creditViewModel,
-                    onNavigateToSettings = {
-                        navController.navigate(Screen.Settings.route) {
-                            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    },
-                    onSaveSuccess = {
-                        navController.navigate(Screen.Dashboard.route) {
-                            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    }
-                )
+                FormScreen(viewModel = creditViewModel)
             }
             composable(Screen.History.route) {
                 HistoryScreen(viewModel = historyViewModel)
