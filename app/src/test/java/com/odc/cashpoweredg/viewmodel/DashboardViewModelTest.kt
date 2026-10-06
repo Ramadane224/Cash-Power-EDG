@@ -7,7 +7,7 @@ import com.odc.cashpoweredg.data.repository.CashPowerRepository
 import com.odc.cashpoweredg.model.CreditState
 import com.odc.cashpoweredg.model.MILLIS_PAR_JOUR
 import com.odc.cashpoweredg.model.MessagesErreur
-import com.odc.cashpoweredg.model.UiStatus
+import com.odc.cashpoweredg.viewmodel.UiStatus
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
