@@ -30,7 +30,7 @@ import com.odc.cashpoweredg.viewmodel.SettingsViewModel
 fun AppNavigation(
     modifier: Modifier = Modifier,
     repository: CashPowerRepository
-){
+) {
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
@@ -38,14 +38,17 @@ fun AppNavigation(
     // ViewModels créés avec la fabrique qui injecte le Repository
     val dashboardViewModel: DashboardViewModel =
         viewModel(factory = DashboardViewModel.factory(repository))
+
     val creditViewModel: CreditViewModel =
         viewModel(factory = CreditViewModel.factory(repository))
+
     val historyViewModel: HistoryViewModel =
         viewModel(factory = HistoryViewModel.factory(repository))
+
     val settingsViewModel: SettingsViewModel =
         viewModel(factory = SettingsViewModel.factory(repository))
 
-    // Navigation vers un onglet : une seule définition, réutilisée partout
+    // Navigation vers un onglet
     val navigateTo: (String) -> Unit = { route ->
         if (currentRoute != route) {
             navController.navigate(route) {
@@ -65,35 +68,77 @@ fun AppNavigation(
                 Screen.destinations.forEach { screen ->
                     NavigationBarItem(
                         selected = currentRoute == screen.route,
-                        onClick = { navigateTo(screen.route) },
+                        onClick = {
+                            navigateTo(screen.route)
+                        },
                         icon = {
                             Icon(
                                 imageVector = screen.icon,
                                 contentDescription = screen.label
                             )
                         },
-                        label = { Text(screen.label) }
+                        label = {
+                            Text(screen.label)
+                        }
                     )
                 }
             }
         }
     ) { innerPadding ->
+
         NavHost(
             navController = navController,
             startDestination = Screen.Dashboard.route,
             modifier = Modifier.padding(innerPadding)
         ) {
+
+            // =========================
+            // TABLEAU DE BORD
+            // =========================
             composable(Screen.Dashboard.route) {
-                DashboardScreen(viewModel = dashboardViewModel)
+                DashboardScreen(
+                    viewModel = dashboardViewModel,
+
+                    // Bouton "Acheter"
+                    // Bouton "Nouveau Relevé / Achat"
+                    // Bouton "Saisir un premier relevé"
+                    onNavigateToForm = {
+                        navigateTo(Screen.Form.route)
+                    },
+
+                    // Disponible si le Dashboard doit ouvrir
+                    // les paramètres directement.
+                    onNavigateToSettings = {
+                        navigateTo(Screen.Settings.route)
+                    }
+                )
             }
+
+            // =========================
+            // SAISIE
+            // =========================
             composable(Screen.Form.route) {
-                FormScreen(viewModel = creditViewModel)
+                FormScreen(
+                    viewModel = creditViewModel
+                )
             }
+
+            // =========================
+            // HISTORIQUE
+            // =========================
             composable(Screen.History.route) {
-                HistoryScreen(viewModel = historyViewModel)
+                HistoryScreen(
+                    viewModel = historyViewModel
+                )
             }
+
+            // =========================
+            // PARAMÈTRES
+            // =========================
             composable(Screen.Settings.route) {
-                SettingsScreen(viewModel = settingsViewModel)
+                SettingsScreen(
+                    viewModel = settingsViewModel
+                )
             }
         }
     }
